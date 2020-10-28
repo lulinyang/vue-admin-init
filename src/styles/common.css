@@ -1,0 +1,170 @@
+.u-flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+/* 换行 */
+.u-flex-wrap {
+  flex-wrap: wrap;
+}
+
+/* 不换行 */
+.u-flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+/* 垂直居中 */
+.u-col-center {
+  align-items: center;
+}
+
+/* 顶部对齐 */
+.u-col-top {
+  align-items: flex-start;
+}
+
+/* 底部对齐 */
+.u-col-bottom {
+  align-items: flex-end;
+}
+
+/* 左边对齐 */
+.u-row-left {
+  justify-content: flex-start;
+}
+
+/* 水平居中 */
+.u-row-center {
+  justify-content: center;
+}
+
+/* 右边对齐 */
+.u-row-right {
+  justify-content: flex-end;
+}
+
+/* 水平两端对齐，项目之间的间隔都相等 */
+.u-row-between {
+  justify-content: space-between;
+}
+
+/* 水平每个项目两侧的间隔相等，所以项目之间的间隔比项目与父元素两边的间隔大一倍 */
+.u-row-around {
+  justify-content: space-around;
+}
+
+
+.u-flex-1 {
+  flex: 1;
+}
+
+.u-flex-2 {
+  flex: 2;
+}
+
+.u-flex-3 {
+  flex: 3;
+}
+
+.u-flex-4 {
+  flex: 4;
+}
+
+.u-flex-5 {
+  flex: 5;
+}
+
+.u-flex-6 {
+  flex: 6;
+}
+
+.u-flex-7 {
+  flex: 7;
+}
+
+.u-flex-8 {
+  flex: 8;
+}
+
+.u-flex-9 {
+  flex: 9;
+}
+
+.u-flex-10 {
+  flex: 10;
+}
+
+.u-flex-11 {
+  flex: 11;
+}
+
+.u-flex-12 {
+  flex: 12;
+}
+
+/* 文字左对齐 */
+.u-text-left {
+  text-align: left;
+}
+
+/* 文字居中对齐 */
+.u-text-center {
+  text-align: center;
+}
+
+/* 文字右对齐 */
+.u-text-right {
+  text-align: right;
+}
+
+.u-font-12 {
+  font-size: 12px;
+}
+
+
+.u-font-12 {
+  font-size: 12px;
+}
+
+
+.u-font-13 {
+  font-size: 13px;
+}
+
+.u-font-14 {
+  font-size: 14px;
+}
+
+.u-font-15 {
+  font-size: 15px;
+}
+
+
+.u-font-16 {
+  font-size: 16px;
+}
+
+.u-font-17 {
+  font-size: 17px;
+}
+
+.u-font-18 {
+  font-size: 18px;
+}
+
+.text-blod-400 {
+  font-weight: 400;
+}
+
+.text-blod-500 {
+  font-weight: 500;
+}
+
+.text-blod-600 {
+  font-weight: 600;
+}
+
+.text-blod-700 {
+  font-weight: 700;
+}
