@@ -186,8 +186,29 @@
                   {
                     path: "table2",
                     name: "Table2",
-                    component: "@/views/table/index",
+                    component: "@/views/table/table-two",
                     meta: { title: "表格2" },
+                  },
+                  {
+                    path: "table3",
+                    name: "Table3",
+                    component: "@/views/table/table-three",
+                    meta: { title: "表格3" },
+                  },
+                ],
+              },
+              {
+                path: "/neditor",
+                component: "Layout",
+                redirect: "noRedirect",
+                name: "NEditor",
+                meta: { title: "富文本", icon: "table" },
+                children: [
+                  {
+                    path: "neditor",
+                    name: "NEditor",
+                    component: "@/views/NEditor/index",
+                    meta: { title: "富文本", icon: "clipboard-list" },
                   },
                 ],
               },

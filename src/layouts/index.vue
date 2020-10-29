@@ -128,6 +128,7 @@
         return document.body.getBoundingClientRect().width - 1 < 992;
       },
       handleResize() {
+        console.log("vertical", document.hidden);
         if (!document.hidden) {
           const isMobile = this.handleIsMobile();
           if (isMobile) {

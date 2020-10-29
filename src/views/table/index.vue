@@ -84,7 +84,7 @@
           {{ formatTime(scope.row.upadte_at, "Y-m-d H:i:s") }}
         </template>
       </el-table-column>
-      <el-table-column label="操作" fixed="right" width="180">
+      <el-table-column label="操作" fixed="right" min-width="200">
         <template slot-scope="scope">
           <el-button
             size="mini"
