@@ -1,11 +1,18 @@
 <template>
   <div class="container">
-    <div class="u-flex u-col-top" style="width:100%">
-      <div class="left-nav" ref="leftNav">
-        <el-tree :data="data" :props="defaultProps" :indent="8" @node-click="handleNodeClick" icon-class="el-icon-folder-opened" :default-expand-all="true"></el-tree>
+    <div class="u-flex u-col-top" style="width: 100%">
+      <div ref="leftNav" class="left-nav">
+        <el-tree
+          :data="data"
+          :props="defaultProps"
+          :indent="8"
+          icon-class="el-icon-folder-opened"
+          :default-expand-all="true"
+          @node-click="handleNodeClick"
+        ></el-tree>
       </div>
-      <div :style="{width: `calc(100% - ${leftWidth}px)`}">
-              <div class="form-group">
+      <div :style="{ width: `calc(100% - ${leftWidth}px)` }">
+        <div class="form-group">
           <el-form :inline="true" :model="form" class="demo-form-inline">
             <el-form-item label="用户名">
               <el-input
@@ -113,7 +120,7 @@
             :page-size="10"
           ></el-pagination>
         </div>
-      </div> 
+      </div>
     </div>
   </div>
 </template>
@@ -133,22 +140,29 @@
           province: "",
           order_sn: "",
         },
-        data: [{
-          label: '一级 1',
-          children: [{
-            label: '二级 1-1',
-            children: [{
-              label: '三级 1-1-1'
-            },{
-              label: '三级 1-1-2'
-            }]
-          }]
-        }],
+        data: [
+          {
+            label: "一级 1",
+            children: [
+              {
+                label: "二级 1-1",
+                children: [
+                  {
+                    label: "三级 1-1-1",
+                  },
+                  {
+                    label: "三级 1-1-2",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
         defaultProps: {
-          children: 'children',
-          label: 'label'
+          children: "children",
+          label: "label",
         },
-        leftWidth: 100
+        leftWidth: 100,
       };
     },
     created() {
@@ -160,14 +174,13 @@
       let that = this;
       this.$nextTick(() => {
         // console.log(that.$refs['leftNav'].offsetWidth);
-        this.leftWidth = this.$refs['leftNav'].offsetWidth;
+        this.leftWidth = this.$refs["leftNav"].offsetWidth;
       });
     },
     methods: {
       handleNodeClick(data) {
-        
-         this.leftWidth = this.$refs['leftNav'].offsetWidth;
-         console.log(this.leftWidth);
+        this.leftWidth = this.$refs["leftNav"].offsetWidth;
+        console.log(this.leftWidth);
       },
       /**
        * 搜索
@@ -210,14 +223,14 @@
     min-height: 400px;
   }
   .el-menu-vertical-demo .el-submenu__title i {
-    color: #000!important;
+    color: #000 !important;
   }
   .left-nav .el-tree-node__label {
     font-size: 16px;
   }
   .left-nav .el-tree-node__expand-icon {
     font-size: 20px;
-    color: #E6A23C;
+    color: #e6a23c;
   }
   .left-nav .el-tree-node__expand-icon.is-leaf {
     color: transparent;
@@ -225,7 +238,6 @@
   }
 </style>
 <style scoped>
-  
   .container {
     padding: 20px;
   }
