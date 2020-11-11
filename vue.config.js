@@ -46,7 +46,7 @@ module.exports = {
       errors: true,
     },
     proxy: {
-      "/order": {
+      "/api": {
         target: conf.baseUrl,
         changeOrigin: true,
         pathRewrite: {

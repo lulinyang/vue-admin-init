@@ -134,17 +134,22 @@
       };
     },
     created() {
-      // UcenterService.getdetail({ order_id: 50, gather_agent_id: 0 }).then(
-      //   (res) => {
-      //     console.log("res", res);
-      //   }
-      // );
+      UcenterService.getdetail({id: '3' }).then(
+        (res) => {
+          console.log("res", res);
+        }
+      );
     },
     methods: {
       /**
        * 搜索
        */
-      search() {},
+      search() {
+        UcenterService.getdetail({id: 3 }).then((res) => {
+          console.log("res", res);
+        }
+      );
+      },
       /**
        * 多选
        */

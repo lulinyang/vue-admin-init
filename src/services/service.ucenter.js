@@ -11,6 +11,6 @@ export class ucenterService extends fetch {
   /* 测试
    */
   getdetail(data) {
-    return this.post('/order/detail', data)
+    return this.get('/api/user/userInfo', data)
   }
 }

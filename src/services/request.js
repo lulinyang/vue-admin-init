@@ -31,7 +31,7 @@ export class fetch {
    */
   setResponseInterceptors() {
     this.http.interceptors.response.use(res => {
-      if (res.data.code * 1 !== 1) {
+      if (res.data.code * 1 !== 0) {
         vue.notify({
           type: 'error',
           title: '错误',
@@ -84,6 +84,12 @@ export class fetch {
             msg: '请求超时！'
           });
           break;
+        default: vue.notify({
+          type: 'error',
+          title: '错误',
+          msg: '请求超时！'
+        });
+        break;
       }
       return Promise.reject(error.response);
     })
