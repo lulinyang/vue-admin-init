@@ -152,47 +152,47 @@
       handleLogin() {
         this.$refs.form.validate(async (valid) => {
           if (valid) {
-             let meuns = [
-                {
-                  path: "/index",
-                  title: "首页",
-                  icon: "el-icon-s-home",
-                },
-                {
-                  path: "/user",
-                  title: "用户中心",
-                  icon: "el-icon-user-solid",
-                  children: [
-                    {
-                      path: "/userlist",
-                      title: "用户管理",
-                    },
-                    {
-                      path: "/rolelist",
-                      title: "角色管理",
-                    },
-                    {
-                      path: "/menulist",
-                      title: "菜单管理",
-                    },
-                  ],
-                },
-                {
-                  path: "/table",
-                  title: "表格",
-                  icon: "el-icon-s-grid",
-                  children: [
-                    {
-                      path: "/table1",
-                      title: "表格1",
-                    },
-                    {
-                      path: "/table2",
-                      title: "表格2",
-                    },
-                  ],
-                }
-              ]
+            let meuns = [
+              {
+                path: "/index",
+                title: "首页",
+                icon: "el-icon-s-home",
+              },
+              {
+                path: "/user",
+                title: "用户中心",
+                icon: "el-icon-user-solid",
+                children: [
+                  {
+                    path: "/userlist",
+                    title: "用户管理",
+                  },
+                  {
+                    path: "/rolelist",
+                    title: "角色管理",
+                  },
+                  {
+                    path: "/menulist",
+                    title: "菜单管理",
+                  },
+                ],
+              },
+              {
+                path: "/table",
+                title: "表格",
+                icon: "el-icon-s-grid",
+                children: [
+                  {
+                    path: "/table1",
+                    title: "表格1",
+                  },
+                  {
+                    path: "/table2",
+                    title: "表格2",
+                  },
+                ],
+              },
+            ];
             this.$store.commit("user/setAccessToken", "000999");
             localStorage.setItem("menu-data", JSON.stringify(meuns));
             this.$store.commit("routes/setRoutes", meuns);

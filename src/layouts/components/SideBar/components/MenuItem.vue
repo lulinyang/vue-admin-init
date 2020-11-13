@@ -12,11 +12,7 @@
     /> -->
     <i v-if="item.icon" :class="[item.icon]"></i>
     <span>{{ routeChildren.title }}</span>
-    <el-tag
-      v-if="routeChildren.badge"
-      type="danger"
-      effect="dark"
-    >
+    <el-tag v-if="routeChildren.badge" type="danger" effect="dark">
       {{ routeChildren.badge }}
     </el-tag>
   </el-menu-item>
