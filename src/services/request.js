@@ -7,8 +7,7 @@ const vue = new Vue();
 export class fetch {
   constructor(val) {
     this.http = axios.create({
-      timeout: 100000,
-      baseURL: conf.baseUrl
+      timeout: 100000
     });
     this.setRequestInterceptors()
     this.setResponseInterceptors()
