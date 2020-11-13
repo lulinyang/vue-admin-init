@@ -5,11 +5,6 @@
         <router-view :key="key" class="app-main-height" />
       </keep-alive>
     </transition>
-    <footer v-show="footerCopyright" class="footer-copyright">
-      Copyright
-      <vab-icon :icon="['fas', 'copyright']"></vab-icon>
-      xxx-项目 {{ fullYear }}
-    </footer>
   </section>
 </template>
 
@@ -43,6 +38,7 @@
       cachedRoutes() {
         const cachedRoutesArr = [];
         this.visitedRoutes.forEach((item) => {
+          console.log('item', item);
           if (!item.meta.noKeepAlive) {
             cachedRoutesArr.push(item.name);
           }

@@ -25,7 +25,7 @@
       </el-form>
     </div>
     <div class="btn-group">
-      <el-button type="primary" icon="el-icon-plus">新增</el-button>
+      <el-button type="primary" icon="el-icon-plus" @click="addUser">新增</el-button>
       <el-button type="danger" icon="el-icon-delete">删除</el-button>
     </div>
     <el-table
@@ -147,8 +147,17 @@
       search() {
         UcenterService.getdetail({id: 3 }).then((res) => {
           console.log("res", res);
-        }
-      );
+        });
+      },
+      addUser() {
+        UcenterService.addUser({
+          username: "测试用户1",
+          password: "123456",
+          phone: "15655569091",
+          head_pic: "https://cdn.uviewui.com/uview/example/fade.jpg"
+        }).then(res => {
+          console.log('----->', res);
+        })
       },
       /**
        * 多选

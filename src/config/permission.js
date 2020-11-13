@@ -3,6 +3,7 @@ import store from "@/store";
 import VabProgress from "nprogress";
 import "nprogress/nprogress.css";
 import getPageTitle from "@/utils/pageTitle";
+import { asyncRoutes } from "@/router/menus";
 
 import { progressBar, recordRoute, routesWhiteList } from "./settings";
 
@@ -14,12 +15,9 @@ VabProgress.configure({
 });
 
 //读取缓存菜单
+router.addRoutes(asyncRoutes);
 let menuData = JSON.parse(localStorage.getItem("menu-data")) || [];
-store.dispatch("routes/setAllRoutes", menuData).then((accessRoutes) => {
-  if (accessRoutes.length > 0) {
-    router.addRoutes(accessRoutes);
-  }
-});
+store.commit("routes/setRoutes", menuData);
 
 router.beforeResolve((to, from, next) => {
   if (progressBar) VabProgress.start();

@@ -2,11 +2,13 @@
 import Vue from 'vue';
 import axios from 'axios'
 import router from '@/router';
+const conf = require("../config/config");
 const vue = new Vue();
 export class fetch {
   constructor(val) {
     this.http = axios.create({
-      timeout: 100000
+      timeout: 100000,
+      baseURL: conf.baseUrl
     });
     this.setRequestInterceptors()
     this.setResponseInterceptors()

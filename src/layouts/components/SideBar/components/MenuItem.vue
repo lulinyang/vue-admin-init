@@ -1,22 +1,23 @@
 <template>
   <el-menu-item :index="handlePath(routeChildren.path)" @click="handleLink">
-    <vab-icon
-      v-if="routeChildren.meta.icon"
-      :icon="['fas', routeChildren.meta.icon]"
+    <!-- <vab-icon
+      v-if="routeChildren.icon"
+      :icon="['fas', routeChildren.icon]"
       class="vab-fas-icon"
     />
     <vab-remix-icon
-      v-if="routeChildren.meta.remixIcon"
-      :icon-class="routeChildren.meta.remixIcon"
+      v-if="routeChildren.remixIcon"
+      :icon-class="routeChildren.remixIcon"
       class="vab-remix-icon"
-    />
-    <span>{{ routeChildren.meta.title }}</span>
+    /> -->
+    <i v-if="item.icon" :class="[item.icon]"></i>
+    <span>{{ routeChildren.title }}</span>
     <el-tag
-      v-if="routeChildren.meta && routeChildren.meta.badge"
+      v-if="routeChildren.badge"
       type="danger"
       effect="dark"
     >
-      {{ routeChildren.meta.badge }}
+      {{ routeChildren.badge }}
     </el-tag>
   </el-menu-item>
 </template>
@@ -57,7 +58,7 @@
       },
       handleLink() {
         const routePath = this.routeChildren.path;
-        const target = this.routeChildren.meta.target;
+        const target = this.routeChildren.target;
 
         if (target === "_blank") {
           if (isExternal(routePath)) {

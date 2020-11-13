@@ -45,15 +45,15 @@ module.exports = {
       warnings: true,
       errors: true,
     },
-    proxy: {
-      "/api": {
-        target: conf.baseUrl,
-        changeOrigin: true,
-        pathRewrite: {
-          "^/": "/",
-        },
-      },
-    },
+    // proxy: {
+    //   "/api": {
+    //     target: conf.baseUrl,
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //       "^/": "/",
+    //     },
+    //   },
+    // },
   },
   configureWebpack() {
     return {

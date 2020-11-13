@@ -5,17 +5,18 @@
     :popper-append-to-body="false"
   >
     <template slot="title">
-      <vab-icon
-        v-if="item.meta && item.meta.icon"
-        :icon="['fas', item.meta.icon]"
+      <!-- <vab-icon
+        v-if="item.icon"
+        :icon="['fas', item.icon]"
         class="vab-fas-icon"
       />
       <vab-remix-icon
-        v-if="item.meta && item.meta.remixIcon"
-        :icon-class="item.meta.remixIcon"
+        v-if="item.remixIcon"
+        :icon-class="item.remixIcon"
         class="vab-remix-icon"
-      />
-      <span>{{ item.meta.title }}</span>
+      /> -->
+      <i v-if="item.icon" :class="[item.icon]"></i>
+      <span>{{ item.title }}</span>
     </template>
     <slot></slot>
   </el-submenu>

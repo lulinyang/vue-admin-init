@@ -8,9 +8,13 @@ export class ucenterService extends fetch {
     super('')
   }
 
-  /* 测试
+  /* 用户信息
    */
   getdetail(data) {
     return this.get('/api/user/userInfo', data)
+  }
+
+  addUser(data) {
+    return this.post('/api/user/addUser', data)
   }
 }

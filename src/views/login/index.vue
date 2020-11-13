@@ -152,100 +152,51 @@
       handleLogin() {
         this.$refs.form.validate(async (valid) => {
           if (valid) {
-            const menuData = [
-              {
-                path: "/",
-                component: "Layout",
-                redirect: "index",
-                children: [
-                  {
-                    path: "index",
-                    name: "Index",
-                    component: "@/views/index/index",
-                    meta: {
-                      title: "首页",
-                      icon: "home",
-                      affix: true,
+             let meuns = [
+                {
+                  path: "/index",
+                  title: "首页",
+                  icon: "el-icon-s-home",
+                },
+                {
+                  path: "/user",
+                  title: "用户中心",
+                  icon: "el-icon-user-solid",
+                  children: [
+                    {
+                      path: "/userlist",
+                      title: "用户管理",
                     },
-                  },
-                ],
-              },
-              {
-                path: "/table",
-                component: "Layout",
-                redirect: "noRedirect",
-                name: "Table",
-                meta: { title: "表格", icon: "table" },
-                children: [
-                  {
-                    path: "table1",
-                    name: "Table1",
-                    component: "@/views/table/index",
-                    meta: { title: "表格1" },
-                  },
-                  {
-                    path: "table2",
-                    name: "Table2",
-                    component: "@/views/table/table-two",
-                    meta: { title: "表格2" },
-                  },
-                  {
-                    path: "table3",
-                    name: "Table3",
-                    component: "@/views/table/table-three",
-                    meta: { title: "表格3" },
-                  },
-                ],
-              },
-              {
-                path: "/neditor",
-                component: "Layout",
-                redirect: "noRedirect",
-                name: "NEditor",
-                meta: { title: "富文本", icon: "table" },
-                children: [
-                  {
-                    path: "neditor",
-                    name: "NEditor",
-                    component: "@/views/NEditor/index",
-                    meta: { title: "富文本", icon: "clipboard-list" },
-                  },
-                ],
-              },
-              {
-                path: "/error",
-                component: "EmptyLayout",
-                redirect: "noRedirect",
-                name: "Error",
-                meta: { title: "错误页", icon: "bug" },
-                children: [
-                  {
-                    path: "401",
-                    name: "Error401",
-                    component: "@/views/401",
-                    meta: { title: "401" },
-                  },
-                  {
-                    path: "404",
-                    name: "Error404",
-                    component: "@/views/404",
-                    meta: { title: "404" },
-                  },
-                ],
-              },
-            ];
+                    {
+                      path: "/rolelist",
+                      title: "角色管理",
+                    },
+                    {
+                      path: "/menulist",
+                      title: "菜单管理",
+                    },
+                  ],
+                },
+                {
+                  path: "/table",
+                  title: "表格",
+                  icon: "el-icon-s-grid",
+                  children: [
+                    {
+                      path: "/table1",
+                      title: "表格1",
+                    },
+                    {
+                      path: "/table2",
+                      title: "表格2",
+                    },
+                  ],
+                }
+              ]
             this.$store.commit("user/setAccessToken", "000999");
-            localStorage.setItem("menu-data", JSON.stringify(menuData));
-            let accessRoutes = await this.$store.dispatch(
-              "routes/setAllRoutes",
-              menuData
-            );
-            router.addRoutes(accessRoutes);
-            const routerPath =
-              this.redirect === "/404" || this.redirect === "/401"
-                ? "/"
-                : this.redirect;
-            this.$router.push(routerPath);
+            localStorage.setItem("menu-data", JSON.stringify(meuns));
+            this.$store.commit("routes/setRoutes", meuns);
+            this.$router.push("/");
           } else {
             return false;
           }
