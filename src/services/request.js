@@ -2,7 +2,7 @@
 import Vue from 'vue';
 import axios from 'axios'
 import router from '@/router';
-const conf = require("../config/config");
+import store from "@/store";
 const vue = new Vue();
 export class fetch {
   constructor(val) {
@@ -22,6 +22,9 @@ export class fetch {
         config.params = {}
       }
       config.headers['Content-Type'] = 'application/json; charset=UTF-8';
+      if(store.getters["user/accessToken"]) {
+        config.headers['Accesstoken'] = store.getters["user/accessToken"];
+      }
       return config
     }, error => {
       console.log(error);
@@ -32,16 +35,23 @@ export class fetch {
    */
   setResponseInterceptors() {
     this.http.interceptors.response.use(res => {
-      if (res.data.code * 1 !== 0) {
+      if (res.data.code * 1 === 0) {
+        return res.data;
+      }else {
         vue.notify({
           type: 'error',
           title: '错误',
           msg: res.data.msg || '喝口水吧，让数据飞一会，请稍后再试'
         });
+        if(res.data.code*1 === 401) {
+          store.dispatch("user/logout").then(() => {
+            router.push("/login");
+          });
+        }
         return Promise.reject(res.data);
       }
-      return res.data;
     }, error => {
+     
       switch (error.response.status) {
         case 500:
           vue.notify({

@@ -1,17 +1,7 @@
 <template>
   <el-menu-item :index="handlePath(routeChildren.path)" @click="handleLink">
-    <!-- <vab-icon
-      v-if="routeChildren.icon"
-      :icon="['fas', routeChildren.icon]"
-      class="vab-fas-icon"
-    />
-    <vab-remix-icon
-      v-if="routeChildren.remixIcon"
-      :icon-class="routeChildren.remixIcon"
-      class="vab-remix-icon"
-    /> -->
     <i v-if="item.icon" :class="[item.icon]"></i>
-    <span>{{ routeChildren.title }}</span>
+    <span>{{ routeChildren.title || routeChildren.name }}</span>
     <el-tag v-if="routeChildren.badge" type="danger" effect="dark">
       {{ routeChildren.badge }}
     </el-tag>

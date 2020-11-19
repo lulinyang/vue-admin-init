@@ -38,7 +38,6 @@
       cachedRoutes() {
         const cachedRoutesArr = [];
         this.visitedRoutes.forEach((item) => {
-          console.log("item", item);
           if (!item.meta.noKeepAlive) {
             cachedRoutesArr.push(item.name);
           }

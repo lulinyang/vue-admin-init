@@ -20,9 +20,11 @@ const mutations = {
     state.accessToken = accessToken;
   },
   setUsername(state, username) {
+    VueCookies.set("username", username, "0");
     state.username = username;
   },
   setAvatar(state, avatar) {
+    VueCookies.set("avatar", avatar, "0");
     state.avatar = avatar;
   },
   setRouter(state, router) {

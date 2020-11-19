@@ -1,42 +1,9 @@
 export default {
   install: function (Vue, opt) {
-    //删除字符串的头尾空格
-    (Vue.prototype.myTrim = function (item) {
-      return item.replace(/^\s+|\s+$/gm, "");
-    }),
-      /*对象(删除字符串的头尾空格)*/
-      (Vue.prototype.myTrimObj = function (object) {
-        if (Object.prototype.toString.call(object) === "[object Array]") {
-          object.forEach((item) => {
-            if (
-              item &&
-              Object.prototype.toString.call(item) == "[object String]"
-            ) {
-              item = this.myTrim(item);
-            } else {
-              this.myTrimObj(item);
-            }
-          });
-        } else if (
-          Object.prototype.toString.call(object) === "[object Object]"
-        ) {
-          let keys = Object.keys(object).sort();
-          for (let i in keys) {
-            if (
-              object[keys[i]] &&
-              Object.prototype.toString.call(object[keys[i]]) ==
-                "[object String]"
-            ) {
-              object[keys[i]] = this.myTrim(object[keys[i]]);
-            } else {
-              this.myTrimObj(object[keys[i]]);
-            }
-          }
-        }
-      });
     //报错提示
     Vue.prototype.notify = function (params) {
-      let msg = params.message || "喝口水吧，让数据飞一会，请稍后再试";
+      let msg =
+        params.msg || params.message || "喝口水吧，让数据飞一会，请稍后再试";
       let title = params.title || "提示";
       let type = params.type || "success";
       this.$message({
@@ -119,6 +86,42 @@ export default {
       {
         return year + "年" + month + "月" + day + "日";
       }
+    };
+
+    Vue.prototype.myTrim = (str, type) => {
+      let newStr = "";
+      if (type == "all") {
+        newStr = str.replace(/\s*/g, "");
+      } else if (type == "left") {
+        newStr = str.replace(/^\s*/, "");
+      } else if (type == "right") {
+        newStr = str.replace(/^\s*/, "");
+      } else {
+        newStr = str.replace(/(\s*$)/g, "");
+      }
+      return newStr;
+    };
+
+    Vue.prototype.deepClone = (obj) => {
+      function isArray(arr) {
+        return Object.prototype.toString.call(arr) === "[object Array]";
+      }
+      // 对常见的“非”值，直接返回原来值
+      if ([null, undefined, NaN, false].includes(obj)) return obj;
+      if (typeof obj !== "object" && typeof obj !== "function") {
+        //原始类型直接返回
+        return obj;
+      }
+      var o = isArray(obj) ? [] : {};
+      for (let i in obj) {
+        if (obj.hasOwnProperty(i)) {
+          o[i] =
+            typeof obj[i] === "object"
+              ? Vue.prototype.deepClone(obj[i])
+              : obj[i];
+        }
+      }
+      return o;
     };
   },
 };

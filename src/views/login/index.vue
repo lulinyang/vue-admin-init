@@ -69,7 +69,7 @@
   import VueCookies from "vue-cookies";
   import router from "@/router";
   // import { authentication } from "./settings";
-
+  import { UcenterService } from "@/services";
   export default {
     name: "Login",
     directives: {
@@ -152,51 +152,23 @@
       handleLogin() {
         this.$refs.form.validate(async (valid) => {
           if (valid) {
-            let meuns = [
-              {
-                path: "/index",
-                title: "首页",
-                icon: "el-icon-s-home",
-              },
-              {
-                path: "/user",
-                title: "用户中心",
-                icon: "el-icon-user-solid",
-                children: [
-                  {
-                    path: "/userlist",
-                    title: "用户管理",
-                  },
-                  {
-                    path: "/rolelist",
-                    title: "角色管理",
-                  },
-                  {
-                    path: "/menulist",
-                    title: "菜单管理",
-                  },
-                ],
-              },
-              {
-                path: "/table",
-                title: "表格",
-                icon: "el-icon-s-grid",
-                children: [
-                  {
-                    path: "/table1",
-                    title: "表格1",
-                  },
-                  {
-                    path: "/table2",
-                    title: "表格2",
-                  },
-                ],
-              },
-            ];
-            this.$store.commit("user/setAccessToken", "000999");
-            localStorage.setItem("menu-data", JSON.stringify(meuns));
-            this.$store.commit("routes/setRoutes", meuns);
-            this.$router.push("/");
+            UcenterService.login(this.form).then((res) => {
+              console.log("---->", res);
+              this.$store.commit("user/setAccessToken", res.data.accessToken);
+              localStorage.setItem(
+                "menu-data",
+                JSON.stringify(res.data.powers)
+              );
+              this.$store.commit("routes/setRoutes", res.data.powers);
+              this.$store.commit("user/setUsername", res.data.username);
+              this.$store.commit("user/setAvatar", res.data.head_pic);
+              this.$router.push("/");
+            });
+            // login
+            // this.$store.commit("user/setAccessToken", "000999");
+            // localStorage.setItem("menu-data", JSON.stringify(meuns));
+            // this.$store.commit("routes/setRoutes", meuns);
+            // this.$router.push("/");
           } else {
             return false;
           }

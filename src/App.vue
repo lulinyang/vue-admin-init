@@ -10,3 +10,9 @@
     mounted() {},
   };
 </script>
+
+<style>
+  .container {
+    padding: 20px;
+  }
+</style>
