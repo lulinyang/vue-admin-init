@@ -1,17 +1,41 @@
 <template>
   <div class="container">
     <div class="form-group">
-      <el-form :inline="true" :model="form" class="demo-form-inline">
-        <el-form-item label="用户名">
+      <el-form
+        ref="searchForm"
+        :inline="true"
+        :model="form"
+        class="demo-form-inline"
+      >
+        <el-form-item label="商品名">
           <el-input
-            v-model="form.username"
-            placeholder="请输入用户名"
+            v-model="form.product_name"
+            placeholder="请输入商品名"
           ></el-input>
         </el-form-item>
+        <el-form-item label="商品分类">
+          <el-select v-model="form.cate_id" placeholder="请选择">
+            <el-option-group
+              v-for="group in cates"
+              :key="group.id"
+              :label="group.name"
+            >
+              <el-option
+                v-for="item in group.children"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              ></el-option>
+            </el-option-group>
+          </el-select>
+        </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" @click="search">
+          <el-button type="primary" icon="el-icon-search" @click="search(true)">
             查询
           </el-button>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="resetForm('searchForm')">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -19,38 +43,78 @@
       <el-button
         type="primary"
         icon="el-icon-plus"
-        @click="jumpPage('/adduser')"
+        @click="jumpPage('/addgoods')"
       >
         新增
       </el-button>
     </div>
-    <el-table :data="tableData" style="width: 100%">
+    <el-table :data="tableData" style="width: 100%" border="">
       <el-table-column
-        prop="username"
-        label="用户名"
-        width="160"
+        prop="product_name"
+        label="商品名"
+        width="260"
         align="left"
       ></el-table-column>
-      <el-table-column label="头像" width="100" align="center">
+      <el-table-column label="商品图片" width="100" align="center">
         <template slot-scope="scope">
           <el-image
-            style="width: 45px; height: 45px"
-            :src="scope.row.head_pic"
-            :preview-src-list="[scope.row.head_pic]"
+            style="width: 50px; height: 50px"
+            :src="scope.row.product_img"
+            :preview-src-list="[scope.row.product_img]"
           ></el-image>
         </template>
       </el-table-column>
       <el-table-column
-        prop="rolename"
-        label="角色"
+        prop="cate_name"
+        label="分类"
         align="center"
+        width="100"
       ></el-table-column>
       <el-table-column
-        prop="phone"
-        label="手机号"
+        prop="product_price"
+        label="单价/元"
         align="center"
-        width="160"
+        width="100"
       ></el-table-column>
+      <el-table-column
+        prop="product_price_max"
+        label="最高价格/元"
+        align="center"
+        width="100"
+      ></el-table-column>
+      <el-table-column
+        prop="del_price"
+        label="划线价格/元"
+        align="center"
+        width="100"
+      ></el-table-column>
+      <el-table-column
+        prop="stock"
+        label="库存"
+        align="center"
+        width="100"
+      ></el-table-column>
+      <el-table-column label="是否上架" width="100" align="center">
+        <template slot-scope="scope">
+          <el-tag
+            v-if="scope.row.is_sale * 1 === 1"
+            type="success"
+            effect="dark"
+          >
+            已上架
+          </el-tag>
+          <el-tag v-if="scope.row.is_sale * 1 === 0" type="info" effect="dark">
+            未上架
+          </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="product_desc"
+        label="商品描述"
+        align="left"
+        width="260"
+      ></el-table-column>
+
       <el-table-column
         prop="create_at"
         label="创建时间"
@@ -69,7 +133,7 @@
             size="mini"
             type="primary"
             icon="el-icon-edit"
-            @click.stop="jumpPage(`/edituser?id=${scope.row.id}`)"
+            @click.stop="jumpPage(`/editgoods?id=${scope.row.id}`)"
           >
             编辑
           </el-button>
@@ -89,6 +153,7 @@
         background
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
+        :current-page="form.page"
         :page-sizes="[10, 200, 300, 400]"
         :page-size="form.pageSize"
         @size-change="changeSize"
@@ -99,7 +164,7 @@
 </template>
 
 <script>
-  import { UcenterService } from "@/services";
+  import { GoodsProductService } from "@/services";
   export default {
     name: "Table2",
     data() {
@@ -108,15 +173,23 @@
         total: 0,
         form: {
           page: 1,
-          username: "",
           pageSize: 10,
+          product_name: "",
+          cate_id: "",
         },
+        cates: [],
       };
     },
     created() {
       this.search();
+      this.getCateList();
     },
     methods: {
+      getCateList() {
+        GoodsProductService.getCateList({}).then((res) => {
+          this.cates = res.data || [];
+        });
+      },
       /**
        * 跳转
        */
@@ -126,8 +199,11 @@
       /**
        * 搜索
        */
-      search() {
-        UcenterService.userList(this.form).then((res) => {
+      search(rest = false) {
+        if (rest) {
+          this.form.page = 1;
+        }
+        GoodsProductService.getProductList(this.form).then((res) => {
           this.tableData = res.data.data || [];
           this.total = res.data.total || 0;
           this.pageSize = res.data.pageSize || 10;
@@ -164,7 +240,7 @@
           type: "warning",
         })
           .then(() => {
-            UcenterService.deleteUser({ id: item.id }).then((res) => {
+            GoodsProductService.delProduct({ id: item.id }).then((res) => {
               this.notify({
                 type: "success",
                 message: "删除成功!",
@@ -179,6 +255,15 @@
               message: "已取消删除",
             });
           });
+      },
+      resetForm(formName) {
+        this.form = {
+          page: 1,
+          pageSize: 10,
+          product_name: "",
+          cate_id: "",
+        };
+        this.search();
       },
     },
   };

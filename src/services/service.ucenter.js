@@ -24,9 +24,17 @@ export class ucenterService extends fetch {
   getdetail(data) {
     return this.get('/api/user/userInfo', data)
   }
-  //
+  //新增用户
   addUser(data) {
     return this.post('/api/user/addUser', data)
+  }
+  //编辑用户
+  editUser(data) {
+    return this.post('/api/user/editUser', data)
+  }
+  //删除用户
+  deleteUser(data) {
+    return this.post('/api/user/deleteUser', data)
   }
   //角色列表
   roleList(data) {
@@ -42,7 +50,7 @@ export class ucenterService extends fetch {
   }
   //获取所有接口
   getAllUrl(data) {
-    return this.get('/api/user/getAllUrl', data)
+    return this.post('/api/user/getAllUrl', data)
   }
    //修改菜单
    editApi(data) {
@@ -72,5 +80,10 @@ export class ucenterService extends fetch {
   //删除角色
   delRole(data) {
     return this.post('/api/user/delRole', data)
+  }
+
+  //删除角色
+  getAllRole(data) {
+    return this.get('/api/user/getAllRole', data)
   }
 }

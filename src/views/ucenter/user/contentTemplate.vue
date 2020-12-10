@@ -7,19 +7,34 @@
       label-width="100px"
       class="demo-ruleForm"
     >
-      <el-form-item label="用户名" prop="head_pic">
+      <el-form-item label="头像" prop="head_pic">
         <el-upload
           class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          action="/api/common/upload"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
+          ,
+          :headers="{
+            Accesstoken: $store.getters['user/accessToken'],
+          }"
         >
-          <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+          <img
+            v-if="ruleForm.head_pic"
+            :src="ruleForm.head_pic"
+            class="avatar"
+          />
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
 
-      <el-form-item label="用户名" prop="username">
+      <el-form-item v-if="id" label="用户名" prop="username">
+        <el-input
+          v-model="ruleForm.username"
+          placeholder="请输入用户名"
+          disabled
+        ></el-input>
+      </el-form-item>
+      <el-form-item v-else label="用户名" prop="username">
         <el-input
           v-model="ruleForm.username"
           placeholder="请输入用户名"
@@ -29,15 +44,21 @@
       <el-form-item label="角色" prop="role_id">
         <el-select v-model="ruleForm.role_id" placeholder="请选择">
           <el-option
-            v-for="item in options"
+            v-for="item in roles"
             :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            :label="item.rolename"
+            :value="item.id"
           ></el-option>
         </el-select>
       </el-form-item>
 
-      <el-form-item label="密码" prop="password">
+      <el-form-item v-if="id" label="密码">
+        <el-input
+          v-model="ruleForm.password"
+          placeholder="前请输入密码"
+        ></el-input>
+      </el-form-item>
+      <el-form-item v-else label="密码" prop="password">
         <el-input
           v-model="ruleForm.password"
           placeholder="前请输入密码"
@@ -65,7 +86,7 @@
         >
           保存
         </el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
+        <el-button v-if="!id" @click="resetForm('ruleForm')">重置</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -98,28 +119,7 @@
           role_id: "",
         },
         imageUrl: "",
-        options: [
-          {
-            value: "选项1",
-            label: "黄金糕",
-          },
-          {
-            value: "选项2",
-            label: "双皮奶",
-          },
-          {
-            value: "选项3",
-            label: "蚵仔煎",
-          },
-          {
-            value: "选项4",
-            label: "龙须面",
-          },
-          {
-            value: "选项5",
-            label: "北京烤鸭",
-          },
-        ],
+        roles: [],
         rules: {
           head_pic: [
             { required: true, message: "请上传头像", trigger: "blur" },
@@ -132,35 +132,53 @@
           ],
           phone: [{ required: true, message: "请输入手机号", trigger: "blur" }],
           role_id: [
-            { required: true, message: "请输选择角色", trigger: "blur" },
+            { required: true, message: "请输选择角色", trigger: "change" },
           ],
         },
       };
     },
-    created() {},
+    created() {
+      this.getAllRole();
+      if (this.id) {
+        this.getdetail();
+      }
+    },
     methods: {
-      getRoleInfo() {
-        UcenterService.getRoleInfo({ id: this.id }).then((res) => {
-          console.log("aaa", res);
+      getAllRole() {
+        UcenterService.getAllRole().then((res) => {
+          this.roles = res.data || [];
+        });
+      },
+      getdetail() {
+        UcenterService.getdetail({ id: this.id }).then((res) => {
+          this.ruleForm = res.data;
         });
       },
       handleAvatarSuccess(res, file) {
-        this.imageUrl = URL.createObjectURL(file.raw);
+        if (res.code * 1 === 0) {
+          this.ruleForm.head_pic = res.data;
+        } else {
+          this.notify({
+            type: "error",
+            msg: res.msg,
+          });
+        }
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            // let apiname = "addRole";
-            // if(this.type == "edit") {
-            //   apiname = "editRole";
-            // }
-            // UcenterService[apiname](this.ruleForm).then(res => {
-            //   this.notify({
-            //     type: "success",
-            //     msg: "保存成功!",
-            //   });
-            //   this.$router.go(-1);
-            // });
+            console.log(this.ruleForm);
+            let apiname = "addUser";
+            if (this.type == "edit") {
+              apiname = "editUser";
+            }
+            UcenterService[apiname](this.ruleForm).then((res) => {
+              this.notify({
+                type: "success",
+                msg: "保存成功!",
+              });
+              this.$router.go(-1);
+            });
           }
         });
       },

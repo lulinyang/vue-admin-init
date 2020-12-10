@@ -17,6 +17,11 @@
       default-expand-all
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
     >
+      <el-table-column label="图标" width="100" align="center">
+        <template slot-scope="scope">
+          <i :class="scope.row.icon"></i>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="name"
         label="名称"
@@ -29,39 +34,34 @@
           <div v-if="scope.row.type * 1 === 1">按钮</div>
         </template>
       </el-table-column>
-      <el-table-column label="图标" width="100" align="center">
-        <template slot-scope="scope">
-          <i :class="scope.row.icon"></i>
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="path"
-        label="路由"
-        align="center"
-      ></el-table-column>
-      <el-table-column label="操作" fixed="right" align="right" min-width="200">
+
+      <el-table-column prop="path" label="路由" align="left"></el-table-column>
+      <el-table-column label="操作" fixed="right" align="left" min-width="200">
         <template slot-scope="scope">
           <el-button
             v-if="scope.row.type * 1 === 0"
             size="mini"
-            type="primary"
+            type="text"
             icon="el-icon-plus"
+            class="btn-success-color"
             @click.stop="addItem(scope.row, scope.$index)"
           >
             添加子菜单/按钮
           </el-button>
           <el-button
             size="mini"
-            type="primary"
+            type="text"
             icon="el-icon-edit"
             @click.stop="editItem(scope.row, scope.$index)"
           >
             编辑
           </el-button>
           <el-button
+            v-if="!scope.row.children"
             size="mini"
-            type="danger"
+            type="text"
             icon="el-icon-delete"
+            class="btn-danger-color"
             @click.stop="delItem(scope.row, scope.$index)"
           >
             删除
@@ -166,6 +166,7 @@
         this.infoform.path = "";
         this.infoform.icon = "";
         this.show = true;
+        delete this.infoform.id;
       },
       addMenuApi(formName) {
         this.$refs[formName].validate((valid) => {
@@ -239,9 +240,7 @@
   .container {
     padding: 20px;
   }
-  .btn-group {
-    padding: 0px 0 20px;
-  }
+
   .sex-male {
     font-size: 18px;
     font-weight: 600;

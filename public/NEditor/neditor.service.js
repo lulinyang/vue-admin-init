@@ -51,13 +51,13 @@ window.UEDITOR_CONFIG['imageUploadService'] = function (context, editor) {
      * @param {Object} res 上传接口返回的response
      * @returns {Boolean} 上传接口返回的response成功状态条件 (比如: res.code == 200)
      */
-    getResponseSuccess: function (data) {
+    getResponseSuccess: function (res) {
       return res.code * 1 === 0;
     },
     /* 指定上传接口返回的response中图片路径的字段，默认为 url
      * 如果图片路径字段不是res的属性，可以写成 对象.属性 的方式，例如：data.url 
      * */
-    imageSrcField: 'url'
+    imageSrcField: 'data'
   }
 };
 

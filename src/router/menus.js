@@ -47,11 +47,21 @@ export const asyncRoutes = [
         },
       },
       {
+        path: "/edituser",
+        name: "Edituser",
+        component: () => import("@/views/ucenter/user/edit-user"),
+        meta: {
+          title: "编辑用户",
+          affix: false,
+          noKeepAlive: true,
+        },
+      },
+      {
         path: "/rolelist",
         name: "Rolelist",
         component: () => import("@/views/ucenter/role/index"),
         meta: {
-          title: "角色列表",
+          title: "机构列表",
           affix: false,
           noKeepAlive: true,
         },
@@ -61,7 +71,7 @@ export const asyncRoutes = [
         name: "Addrole",
         component: () => import("@/views/ucenter/role/add-role"),
         meta: {
-          title: "新增角色",
+          title: "新增机构",
           affix: false,
           noKeepAlive: true,
         },
@@ -71,7 +81,7 @@ export const asyncRoutes = [
         name: "Editrole",
         component: () => import("@/views/ucenter/role/edit-role"),
         meta: {
-          title: "编辑角色",
+          title: "编辑机构",
           affix: false,
           noKeepAlive: true,
         },
@@ -99,30 +109,139 @@ export const asyncRoutes = [
     ],
   },
   {
-    path: "/table",
+    path: "/goods",
     component: Layout,
-    name: "Table",
+    name: "Goods",
     meta: {
-      title: "表格",
-      icon: "table",
+      title: "商品管理",
     },
     children: [
       {
-        path: "/table1",
-        name: "Table1",
-        component: () => import("@/views/table/index"),
+        path: "/catelist",
+        name: "Catelist",
+        component: () => import("@/views/product/cate/index"),
         meta: {
-          title: "表格1",
+          title: "分类管理",
           affix: false,
           noKeepAlive: true,
         },
       },
       {
-        path: "/table2",
-        name: "Table1",
-        component: () => import("@/views/table/index"),
+        path: "/addcate",
+        name: "Addcate",
+        component: () => import("@/views/product/cate/add-cate"),
         meta: {
-          title: "表格2",
+          title: "新增分类",
+          affix: false,
+          noKeepAlive: true,
+        },
+      },
+      {
+        path: "/editcate",
+        name: "Editcate",
+        component: () => import("@/views/product/cate/edit-cate"),
+        meta: {
+          title: "编辑分类",
+          affix: false,
+          noKeepAlive: true,
+        },
+      },
+      {
+        path: "/productlist",
+        name: "Productlist",
+        component: () => import("@/views/product/goods/index"),
+        meta: {
+          title: "商品管理",
+          affix: false,
+          noKeepAlive: true,
+        },
+      },
+      {
+        path: "/addgoods",
+        name: "Addgoods",
+        component: () => import("@/views/product/goods/add-goods"),
+        meta: {
+          title: "新增商品",
+          affix: false,
+          noKeepAlive: true,
+        },
+      },
+      {
+        path: "/editgoods",
+        name: "Editgoods",
+        component: () => import("@/views/product/goods/edit-goods"),
+        meta: {
+          title: "编辑商品",
+          affix: false,
+          noKeepAlive: true,
+        },
+      },
+    ],
+  },
+  {
+    path: "/promotion",
+    component: Layout,
+    name: "Promotion",
+    meta: {
+      title: "营销管理",
+    },
+    children: [
+      {
+        path: "/couponlist",
+        name: "Couponlist",
+        component: () => import("@/views/marketing/coupon/index"),
+        meta: {
+          title: "优惠券",
+          affix: false,
+          noKeepAlive: true,
+        },
+      },
+      {
+        path: "/addcoupon",
+        name: "Addcoupon",
+        component: () => import("@/views/marketing/coupon/add-coupon"),
+        meta: {
+          title: "新增优惠券",
+          affix: false,
+          noKeepAlive: true,
+        },
+      },
+      {
+        path: "/editcoupon",
+        name: "Editcoupon",
+        component: () => import("@/views/marketing/coupon/edit-coupon"),
+        meta: {
+          title: "编辑优惠券",
+          affix: false,
+          noKeepAlive: true,
+        },
+      },
+      {
+        path: "/discountlist",
+        name: "Discountlist",
+        component: () => import("@/views/marketing/discount/index"),
+        meta: {
+          title: "限时折扣",
+          affix: false,
+          noKeepAlive: true,
+        },
+      },
+      {
+        path: "/adddiscount",
+        name: "Adddiscount",
+        component: () => import("@/views/marketing/discount/add-discount"),
+        meta: {
+          title: "新增折扣商品",
+          affix: false,
+          noKeepAlive: true,
+        },
+      },
+      {
+        path: "/editdiscount",
+        name: "Editdiscount",
+        component: () => import("@/views/marketing/discount/edit-discount"),
+        meta: {
+          title: "编辑则扣商品",
           affix: false,
           noKeepAlive: true,
         },

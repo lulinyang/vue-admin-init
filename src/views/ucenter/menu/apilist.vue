@@ -2,20 +2,14 @@
   <div class="container">
     <div class="form-group">
       <el-form :inline="true" :model="form" class="demo-form-inline">
-        <el-form-item label="用户名">
-          <el-input v-model="form.name" placeholder="请输入用户名"></el-input>
+        <el-form-item label="路由">
+          <el-input v-model="form.url" placeholder="请输入路由"></el-input>
         </el-form-item>
-        <el-form-item label="订单号">
-          <el-input
-            v-model="form.order_sn"
-            placeholder="请输入订单号"
-          ></el-input>
+        <el-form-item label="名称">
+          <el-input v-model="form.name" placeholder="请输入名称"></el-input>
         </el-form-item>
-        <el-form-item label="省份">
-          <el-select v-model="form.province" placeholder="活动区域">
-            <el-option label="上海" value="shanghai"></el-option>
-            <el-option label="北京" value="beijing"></el-option>
-          </el-select>
+        <el-form-item label="描述">
+          <el-input v-model="form.desc" placeholder="请输入描述"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" @click="search">
@@ -118,8 +112,8 @@
         total: 1000,
         form: {
           name: "",
-          province: "",
-          order_sn: "",
+          url: "",
+          desc: "",
         },
         infoform: {
           name: "",
@@ -139,7 +133,7 @@
        * 搜索
        */
       search() {
-        UcenterService.getAllUrl({}).then((res) => {
+        UcenterService.getAllUrl(this.form).then((res) => {
           this.tableData = res.data || [];
         });
       },

@@ -137,7 +137,7 @@
       document.body.style.overflow = "auto";
     },
     mounted() {
-      this.form.username = "admin";
+      this.form.username = "linyang";
       this.form.password = "123456";
     },
     methods: {

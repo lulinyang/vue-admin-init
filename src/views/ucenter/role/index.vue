@@ -27,14 +27,45 @@
     <el-table :data="tableData" style="width: 100%">
       <el-table-column
         prop="rolename"
-        label="角色"
-        align="center"
+        label="机构名称"
+        align="left"
+        width="280"
       ></el-table-column>
       <el-table-column
         prop="desc"
         label="描述"
-        align="center"
+        align="left"
+        min-width="280"
+      ></el-table-column>
+      <el-table-column
+        prop="host"
+        label="上传域名"
+        align="left"
         min-width="180"
+      ></el-table-column>
+      <el-table-column
+        prop="bucket"
+        label="上传空间"
+        align="left"
+        min-width="180"
+      ></el-table-column>
+      <el-table-column
+        prop="region"
+        label="上传区域"
+        align="center"
+        min-width="80"
+      ></el-table-column>
+      <el-table-column
+        prop="access_key"
+        label="ACCESS-KEY"
+        align="center"
+        min-width="360"
+      ></el-table-column>
+      <el-table-column
+        prop="secret_key"
+        label="SECRET-KEY"
+        align="center"
+        min-width="360"
       ></el-table-column>
       <el-table-column
         prop="create_at"
@@ -59,6 +90,7 @@
             编辑
           </el-button>
           <el-button
+            v-if="$store.getters['user/username'] == 'admin'"
             size="mini"
             type="danger"
             icon="el-icon-delete"
@@ -86,7 +118,7 @@
 <script>
   import { UcenterService } from "@/services";
   export default {
-    name: "Table2",
+    name: "RoleList",
     data() {
       return {
         tableData: [],
@@ -99,6 +131,7 @@
       };
     },
     created() {
+      console.log(this.$store.getters["user/username"]);
       this.search();
     },
     methods: {

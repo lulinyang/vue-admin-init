@@ -1,17 +1,25 @@
 <template>
   <div class="container">
     <div class="form-group">
-      <el-form :inline="true" :model="form" class="demo-form-inline">
-        <el-form-item label="用户名">
+      <el-form
+        ref="searchForm"
+        :inline="true"
+        :model="form"
+        class="demo-form-inline"
+      >
+        <el-form-item label="优惠券名称">
           <el-input
-            v-model="form.username"
-            placeholder="请输入用户名"
+            v-model="form.coupon_name"
+            placeholder="请输入优惠券名称"
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" @click="search">
+          <el-button type="primary" icon="el-icon-search" @click="search(true)">
             查询
           </el-button>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="resetForm('searchForm')">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -19,37 +27,53 @@
       <el-button
         type="primary"
         icon="el-icon-plus"
-        @click="jumpPage('/adduser')"
+        @click="jumpPage('/adddiscount')"
       >
         新增
       </el-button>
     </div>
-    <el-table :data="tableData" style="width: 100%">
+    <el-table :data="tableData" style="width: 100%" border="">
       <el-table-column
-        prop="username"
-        label="用户名"
-        width="160"
+        prop="name"
+        label="活动名称"
+        width="180"
         align="left"
       ></el-table-column>
-      <el-table-column label="头像" width="100" align="center">
+      <el-table-column label="状态" align="center" width="180">
         <template slot-scope="scope">
-          <el-image
-            style="width: 45px; height: 45px"
-            :src="scope.row.head_pic"
-            :preview-src-list="[scope.row.head_pic]"
-          ></el-image>
+          <el-tag v-if="scope.row.status * 1 === 1" type="danger" effect="dark">
+            已禁用
+          </el-tag>
+          <el-tag v-if="scope.row.status * 1 === 4" type="info" effect="dark">
+            未开始
+          </el-tag>
+          <el-tag
+            v-if="scope.row.status * 1 === 3"
+            type="success"
+            effect="dark"
+          >
+            进行中
+          </el-tag>
+          <el-tag
+            v-if="scope.row.status * 1 === 2"
+            type="warning"
+            effect="dark"
+          >
+            已结束
+          </el-tag>
         </template>
       </el-table-column>
       <el-table-column
-        prop="rolename"
-        label="角色"
+        prop="start_time"
+        label="开始时间"
         align="center"
+        width="180"
       ></el-table-column>
       <el-table-column
-        prop="phone"
-        label="手机号"
+        prop="end_time"
+        label="结束时间"
         align="center"
-        width="160"
+        width="180"
       ></el-table-column>
       <el-table-column
         prop="create_at"
@@ -69,7 +93,7 @@
             size="mini"
             type="primary"
             icon="el-icon-edit"
-            @click.stop="jumpPage(`/edituser?id=${scope.row.id}`)"
+            @click.stop="jumpPage(`/editdiscount?id=${scope.row.id}`)"
           >
             编辑
           </el-button>
@@ -89,6 +113,7 @@
         background
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
+        :current-page="form.page"
         :page-sizes="[10, 200, 300, 400]"
         :page-size="form.pageSize"
         @size-change="changeSize"
@@ -99,7 +124,7 @@
 </template>
 
 <script>
-  import { UcenterService } from "@/services";
+  import { MarketingService } from "@/services";
   export default {
     name: "Table2",
     data() {
@@ -108,13 +133,13 @@
         total: 0,
         form: {
           page: 1,
-          username: "",
           pageSize: 10,
+          coupon_name: "",
         },
       };
     },
     created() {
-      this.search();
+      this.search(true);
     },
     methods: {
       /**
@@ -126,8 +151,11 @@
       /**
        * 搜索
        */
-      search() {
-        UcenterService.userList(this.form).then((res) => {
+      search(rest = false) {
+        if (rest) {
+          this.form.page = 1;
+        }
+        MarketingService.getDiscountList(this.form).then((res) => {
           this.tableData = res.data.data || [];
           this.total = res.data.total || 0;
           this.pageSize = res.data.pageSize || 10;
@@ -149,12 +177,6 @@
         this.search();
       },
       /**
-       * 编辑
-       */
-      editItem(item, index) {
-        console.log(item, index);
-      },
-      /**
        * 删除
        */
       delItem(item, index) {
@@ -164,13 +186,12 @@
           type: "warning",
         })
           .then(() => {
-            UcenterService.deleteUser({ id: item.id }).then((res) => {
+            MarketingService.delDiscount({ id: item.id }).then((res) => {
               this.notify({
                 type: "success",
                 message: "删除成功!",
               });
-              this.form.page = 1;
-              this.search();
+              this.search(true);
             });
           })
           .catch(() => {
@@ -180,6 +201,15 @@
             });
           });
       },
+      resetForm(formName) {
+        this.form = {
+          page: 1,
+          pageSize: 10,
+          product_name: "",
+          cate_id: "",
+        };
+        this.search();
+      },
     },
   };
 </script>
@@ -188,7 +218,7 @@
     padding: 20px;
   }
   .btn-group {
-    padding: 0px 0 20px;
+    padding: 10px 0 10px;
   }
   .sex-male {
     font-size: 18px;
